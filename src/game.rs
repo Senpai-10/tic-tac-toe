@@ -2,6 +2,7 @@ use std::io::Write;
 
 pub struct Game {
     board: Vec<Vec<String>>,
+    turn: String,
     quit: bool,
 }
 
@@ -13,18 +14,22 @@ impl Game {
                 vec![String::from("4"), String::from("5"), String::from("6")],
                 vec![String::from("7"), String::from("8"), String::from("9")],
             ],
+            turn: String::from("x"),
             quit: false,
         }
     }
 
-    pub fn run(self) {
+    pub fn run(mut self) {
         while !self.quit {
             self.clear_screen();
             println!();
             self.display();
+            println!("{}", self.turn);
+
             let input = self.input("hi ");
 
             println!("input: {}", input);
+            self.next_turn();
         }
     }
 
@@ -34,6 +39,14 @@ impl Game {
                 print!("  {}  ", item);
             }
             print!("\n");
+        }
+    }
+
+    fn next_turn(&mut self) {
+        if self.turn == "x" {
+            self.turn = "o".to_string()
+        } else {
+            self.turn = "x".to_string()
         }
     }
 
