@@ -1,5 +1,8 @@
+use std::io::Write;
+
 pub struct Game {
     board: Vec<Vec<String>>,
+    quit: bool,
 }
 
 impl Game {
@@ -10,11 +13,19 @@ impl Game {
                 vec![String::from("4"), String::from("5"), String::from("6")],
                 vec![String::from("7"), String::from("8"), String::from("9")],
             ],
+            quit: false,
         }
     }
 
     pub fn run(self) {
-        self.display();
+        while !self.quit {
+            self.clear_screen();
+            println!();
+            self.display();
+            let input = self.input("hi ");
+
+            println!("input: {}", input);
+        }
     }
 
     fn display(&self) {
@@ -24,6 +35,17 @@ impl Game {
             }
             print!("\n");
         }
+    }
+
+    fn input(&self, message: &str) -> String {
+        println!();
+        print!("{}", message);
+        let mut ret = String::new();
+        std::io::stdout().flush().unwrap();
+        std::io::stdin()
+            .read_line(&mut ret)
+            .expect("Failed to read from stdin");
+        return ret.trim().to_string();
     }
 
     fn clear_screen(&self) {
