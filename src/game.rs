@@ -10,9 +10,9 @@ impl Game {
     pub fn new() -> Game {
         Game {
             board: vec![
-                vec![String::from("1"), String::from("2"), String::from("3")],
-                vec![String::from("4"), String::from("5"), String::from("6")],
-                vec![String::from("7"), String::from("8"), String::from("9")],
+                vec![1.to_string(), 2.to_string(), 3.to_string()],
+                vec![4.to_string(), 5.to_string(), 6.to_string()],
+                vec![7.to_string(), 8.to_string(), 9.to_string()],
             ],
             turn: String::from("x"),
             quit: false,
@@ -25,8 +25,7 @@ impl Game {
             println!();
             self.display();
             let input: u8 = skip_fail!(self.input(&format!("{}'s Turn ", self.turn)).parse());
-
-            println!("input: {}", input);
+            self.fill_cell(input, self.turn.to_owned());
             self.next_turn();
         }
     }
@@ -43,12 +42,19 @@ impl Game {
     fn is_board_full(&self) {
         todo!()
     }
-    /// check if selected cell is filled by another player
-    /// for example: 1 2 3 is x 2 3
-    /// o can't fill 1
-    fn is_cell_filled(&self) {
-        todo!()
+
+    fn fill_cell(&mut self, cell_number: u8, turn: String) {
+        // self.find_winner();
+
+        for (row_index, row) in self.board.clone().iter().enumerate() {
+            for (item_index, item) in row.iter().enumerate() {
+                if item == &cell_number.to_string() {
+                    self.board[row_index][item_index] = turn.to_string();
+                }
+            }
+        }
     }
+
     fn find_winner(&self) {
         todo!()
     }
