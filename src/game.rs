@@ -1,5 +1,5 @@
+use crate::skip_fail;
 use std::io::Write;
-
 pub struct Game {
     board: Vec<Vec<String>>,
     turn: String,
@@ -24,9 +24,7 @@ impl Game {
             self.clear_screen();
             println!();
             self.display();
-            println!("{}", self.turn);
-
-            let input = self.input("hi ");
+            let input: u8 = skip_fail!(self.input(&format!("{}'s Turn ", self.turn)).parse());
 
             println!("input: {}", input);
             self.next_turn();
@@ -40,6 +38,19 @@ impl Game {
             }
             print!("\n");
         }
+    }
+
+    fn is_board_full(&self) {
+        todo!()
+    }
+    /// check if selected cell is filled by another player
+    /// for example: 1 2 3 is x 2 3
+    /// o can't fill 1
+    fn is_cell_filled(&self) {
+        todo!()
+    }
+    fn find_winner(&self) {
+        todo!()
     }
 
     fn next_turn(&mut self) {
